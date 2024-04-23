@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class CubesScript : MonoBehaviour
 {
-
-    [SerializeField] float pushTime = 3f, timer = 0f;
     public float forcePower = 2.5f;
     Vector3 torqueVector;
-    Rigidbody rb;
+    [SerializeField] Rigidbody rb;
+    [SerializeField] bool readyToSpawn = false;
+    public GameObject assetToSpawn;
     
     // Start is called before the first frame update
     void Start()
     {
+        GameManager.TimeForAction += Action;
         rb = gameObject.GetComponent<Rigidbody>();
         SetColor();
     }
@@ -20,30 +21,43 @@ public class CubesScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timer += Time.deltaTime;
-        if (pushTime < timer)
+        if (transform.position.y < -2f)
         {
-            timer = 0f;
-            rb.AddForce(Vector3.up * forcePower, ForceMode.Impulse);
-            torqueVector = RandomVector();
-            rb.AddTorque(torqueVector, ForceMode.Impulse);
+            GameManager.TimeForAction -= Action;
+            Destroy(gameObject);
         }
     }
 
-    void SetColor()
+    public void SetColor()
     {
         Vector3 generatedVector = RandomVector();
-        Color color = new Vector4(1f, generatedVector.x, generatedVector.y, generatedVector.z);
+        Color color = new Vector4(1f, Mathf.Abs(generatedVector.x), Mathf.Abs(generatedVector.y), Mathf.Abs(generatedVector.z));
         gameObject.GetComponent<Renderer>().material.color = color;
     }
 
-    Vector3 RandomVector ()
+    public Vector3 RandomVector ()
     {
-        float a = Random.Range(0f, 1f);
-        float b = Random.Range(0f, 1f);
-        float c = Random.Range(0f, 1f);
+        float a = Random.Range(-1f, 1f);
+        float b = Random.Range(-1f, 1f);
+        float c = Random.Range(-1f, 1f);
         Vector3 generatedVector = new Vector3(a, b, c);
         return generatedVector;
+    }
+
+    public virtual void Action()                                    // virtual keyword allows overriding also this is an example of abstraction
+    {        
+        rb.AddForce(Vector3.up * forcePower, ForceMode.Impulse);
+        torqueVector = RandomVector();
+        rb.AddTorque(torqueVector, ForceMode.Impulse);
+        if (!readyToSpawn)
+        {
+            readyToSpawn = true;
+        }
+        else
+        {
+            Vector3 pos = gameObject.transform.position;
+            Instantiate(assetToSpawn, pos, Quaternion.identity);
+        }
     }
 
 }

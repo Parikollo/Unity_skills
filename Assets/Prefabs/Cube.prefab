@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 9047738141134287458}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: SpawnedObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -119,9 +119,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2af8515afd0e2bb4bb4feca4c1b894a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pushTime: 3
   forcePower: 7.5
   rb: {fileID: 0}
+  readyToSpawn: 0
   assetToSpawn: {fileID: 7464288258341802138, guid: 83e22b214970cde4c8086288bd052107, type: 3}
 --- !u!54 &9047738141134287458
 Rigidbody:

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1049741443490238607}
   m_Layer: 0
   m_Name: Sphere
-  m_TagString: Untagged
+  m_TagString: SpawnedObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -119,9 +119,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d095c62fecf33149b2d6a4821084458, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pushTime: 3
   forcePower: 7
   rb: {fileID: 0}
+  readyToSpawn: 0
   assetToSpawn: {fileID: 582143741945116948, guid: 537c5dd4dd6267143ba695be493932db, type: 3}
 --- !u!54 &1049741443490238607
 Rigidbody:

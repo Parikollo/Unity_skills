@@ -16,8 +16,5 @@ public class FPSScript : MonoBehaviour
 
         if (timer <= 0f) avgFramrate = (int)(1f / timelapse);
         m_Text.text = string.Format(display, avgFramrate.ToString());
-
-
-
     }
 }

@@ -24,6 +24,8 @@ public class CubesScript : MonoBehaviour
         if (transform.position.y < -2f)
         {
             GameManager.TimeForAction -= Action;
+            GameManager gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+            gm.objectsCount -= 1;
             Destroy(gameObject);
         }
     }

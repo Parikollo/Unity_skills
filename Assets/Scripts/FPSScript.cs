@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class FPSScript : MonoBehaviour
 {
     float timer, refresh; 
-    public float avgFramrate;
+    public float avgFramrate = 145;
     public string display = "{0} FPS";
     public Text m_Text;
 

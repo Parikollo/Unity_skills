@@ -6,9 +6,9 @@ public class SpheresScript : CubesScript
 {
 
 
-    public override void Action()           // can override virtual methods from parent class
+    public override void Action(int reDigit)           // can override virtual methods from parent class
     {
-        base.Action();
+        base.Action(reDigit);
         SetColor();
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class CanvasScript : MonoBehaviour               //this script manages canvas layers from start to finish
 {
     public bool hideFirstLayer, hideSecondLayer;
+
     public GameObject arena, firstLayer, secondLayer;
 
     // Start is called before the first frame update
@@ -27,14 +28,21 @@ public class CanvasScript : MonoBehaviour               //this script manages ca
             }
             else if (!hideSecondLayer)
             {
-                hideSecondLayer = true;
+                /*hideSecondLayer = true;
                 secondLayer.SetActive(false);
-                arena.SetActive(true);
+                arena.SetActive(true);*/
             }
             else
             {                
                 Destroy(this);
             }
         }
+    }
+
+    public void ButtonClick()
+    {
+        hideSecondLayer = true;
+        secondLayer.SetActive(false);
+        arena.SetActive(true);
     }
 }

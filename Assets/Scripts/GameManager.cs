@@ -8,19 +8,61 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] float actionTimer = 3f;                    //timers to control object spawning
     [SerializeField] float timeSpent = 0f;                      //timers to control object spawning
-    
+    [SerializeField] bool stopSpawning;                         //bool to stop spawn new objects
+    [SerializeField] bool stopScoring;                         //bool to stop count points
+
     //variables for counting objects system
     public int objectsCount;
     string objCountString = "Obj Count: {0}/{1}";            //text template for text
     public Text m_objectsCountText;
+    public GameObject go_clickText;
+    //variables to count system's score
+    string scoreString_1 = "Your system score is calculating! At this moment you have {0} parrots";            //text template for text
+    string scoreString_2 = "Well done! Your system managed to get {0} parrots";            //text template for text
+    public Text m_scoreText;
+    int finalScore;                                 //final score of this system
 
     //variables to stop object spawning via FPS and objectCount controls
-    int minFPS = 30, maxObjCount = 9000;
+    [SerializeField]  int minFPS = 30, maxObjCount = 9000;
+    public FPSScript fpsScript;                                     //reference to a FPS Script
+
+    //variables to parse InputFields with FPS and Obj count
+    public Text fps_Text;           //text to explain min FPS
+    string minFPSDisplay = "Min {0} FPS";
+    public int fpsInput                                     //implementation of encapsulation
+    {
+        get { return minFPS; }
+        set
+        {
+            minFPS = value;
+            if(144 < minFPS || minFPS < 10 )
+            {
+                Debug.Log("Wrong FPS Setting");
+                fpsInput = 30;
+            }
+        }
+    }
+
+    public int objCountInput                                //implementation of encapsulation
+    {
+        get { return maxObjCount; }
+        set
+        {
+            maxObjCount = value;
+            if (16384 < maxObjCount || maxObjCount < 1024)
+            {
+                Debug.Log("Wrong OBJ Setting");
+                maxObjCount = 9000;
+            }
+        }
+    }
 
     public GameObject[] objectsToSpawnAtFirst;
     
-    public delegate void TimerCut();                            //event to iniciate object spawning
-    public static event TimerCut TimeForAction;                 //event to iniciate object spawning
+    public delegate void TimerCut(int digit);                            //event to iniciate object spawning
+    public static event TimerCut TimeForAction;                         //event to iniciate object spawning
+    int sendDigit = 1;                                                  //variable to send when I need to stop instantiating action on Cubes and Spheres
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,7 +73,16 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timeSpent += Time.deltaTime;
+        if (objectsCount > 0)
+        {
+            timeSpent += Time.deltaTime;
+            if (stopSpawning && !stopScoring)
+            {
+                int avgFPS = (int)fpsScript.avgFramrate;
+                GetScore(objectsCount, avgFPS);
+            }
+        }
+
         if (Input.GetMouseButtonDown(0))
         {
             Debug.Log("Left mouse clicked");
@@ -43,6 +94,8 @@ public class GameManager : MonoBehaviour
                 int spawnIndex = Random.Range(0, 2);
                 Instantiate(objectsToSpawnAtFirst[spawnIndex], new Vector3(hit.point.x, 0.75f, hit.point.z), Quaternion.identity);
                 CountObjects();
+
+                go_clickText.SetActive(false);
             }
         }
 
@@ -50,8 +103,11 @@ public class GameManager : MonoBehaviour
         {
             timeSpent = 0f;
             if (TimeForAction != null)
-                TimeForAction();
-            Debug.Log("EVENT!!!");
+            {
+                TimeForAction(sendDigit);
+                Debug.Log("EVENT!!!");
+            }
+
         }
     }
 
@@ -60,6 +116,17 @@ public class GameManager : MonoBehaviour
         if(timeSpent == 0f)
         {
             CountObjects();
+            int avgFPS = (int)fpsScript.avgFramrate;
+            if (objectsCount > 1 && !stopSpawning)
+            {
+                if (avgFPS < minFPS || objectsCount > maxObjCount)
+                {
+                    stopSpawning = true;
+                    sendDigit = 2;
+                    Debug.Log("Stop Spawning!!!");
+                }
+            }
+
         }
     }
 
@@ -67,5 +134,38 @@ public class GameManager : MonoBehaviour
     {
         objectsCount = SceneManager.GetActiveScene().rootCount - 6;
         m_objectsCountText.text = string.Format(objCountString, objectsCount.ToString(), maxObjCount.ToString());
+    }
+
+    public void ReadFPSInput(string s)
+    {
+        int i;
+        bool result;
+        result = int.TryParse(s, out i);
+        if(result)
+        {
+            fpsInput = int.Parse(s);
+            //minFPS = fpsInput;
+        }      
+
+        fps_Text.text = string.Format(minFPSDisplay, minFPS.ToString());
+    }
+
+    public void ReadOBJInput(string s)
+    {
+        int i;
+        bool result;
+        result = int.TryParse(s, out i);
+        if (result)
+        {
+            objCountInput = int.Parse(s);            
+        }
+
+        //fps_Text.text = string.Format(minFPSDisplay, minFPS.ToString());
+    }
+
+    void GetScore (int obj, int fps)
+    {
+        finalScore += obj * fps;
+        m_scoreText.text = string.Format(scoreString_1, finalScore.ToString());
     }
 }

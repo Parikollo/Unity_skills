@@ -46,20 +46,22 @@ public class CubesScript : MonoBehaviour
         return generatedVector;
     }
 
-    public virtual void Action()                                    // virtual keyword allows overriding also this is an example of abstraction
+    public virtual void Action(int reDigit)                                    // virtual keyword allows overriding also this is an example of abstraction
     {        
         rb.AddForce(Vector3.up * forcePower, ForceMode.Impulse);
         torqueVector = RandomVector();
         rb.AddTorque(torqueVector, ForceMode.Impulse);
+        Debug.Log("IntegerPassed_" + reDigit);
         if (!readyToSpawn)
         {
             readyToSpawn = true;
         }
-        else
+        else if (reDigit == 1)
         {
             Vector3 pos = gameObject.transform.position;
             Instantiate(assetToSpawn, pos, Quaternion.identity);
         }
+
     }
 
 }

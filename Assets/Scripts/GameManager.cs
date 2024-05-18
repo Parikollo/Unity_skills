@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     string scoreString_2 = "Well done! Your system managed to get {0} parrots";            //text template for text
     public Text m_scoreText;
     int finalScore;                                 //final score of this system
+    int testCount;                                  //number of benchmarkings
 
     //variables to stop object spawning via FPS and objectCount controls
     [SerializeField]  int minFPS = 30, maxObjCount = 9000;
@@ -76,11 +77,7 @@ public class GameManager : MonoBehaviour
         if (objectsCount > 0)
         {
             timeSpent += Time.deltaTime;
-            if (stopSpawning && !stopScoring)
-            {
-                int avgFPS = (int)fpsScript.avgFramrate;
-                GetScore(objectsCount, avgFPS);
-            }
+
         }
 
         if (Input.GetMouseButtonDown(0))
@@ -106,6 +103,21 @@ public class GameManager : MonoBehaviour
             {
                 TimeForAction(sendDigit);
                 Debug.Log("EVENT!!!");
+            }
+
+            if (stopSpawning && !stopScoring)
+            {
+                testCount += 1;
+                if (testCount > 5)
+                {
+                    sendDigit = 3;
+                    m_scoreText.text = string.Format(scoreString_2, finalScore.ToString());
+                }
+                else
+                {
+                    int avgFPS = (int)fpsScript.avgFramrate;
+                    GetScore(objectsCount, avgFPS);
+                }
             }
 
         }

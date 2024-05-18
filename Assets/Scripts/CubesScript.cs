@@ -23,10 +23,7 @@ public class CubesScript : MonoBehaviour
     {
         if (transform.position.y < -2f)
         {
-            GameManager.TimeForAction -= Action;
-            GameManager gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
-            gm.objectsCount -= 1;
-            Destroy(gameObject);
+            DestroyThisObject();
         }
     }
 
@@ -61,7 +58,19 @@ public class CubesScript : MonoBehaviour
             Vector3 pos = gameObject.transform.position;
             Instantiate(assetToSpawn, pos, Quaternion.identity);
         }
+        else if (reDigit == 3)
+        {
+            DestroyThisObject();
+        }
 
+    }
+
+    void DestroyThisObject()
+    {
+        GameManager.TimeForAction -= Action;
+        GameManager gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+        gm.objectsCount -= 1;
+        Destroy(gameObject);
     }
 
 }

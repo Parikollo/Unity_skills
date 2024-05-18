@@ -80,7 +80,7 @@ public class GameManager : MonoBehaviour
 
         }
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !stopSpawning)
         {
             Debug.Log("Left mouse clicked");
             RaycastHit hit;

@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
 
     //variables to parse InputFields with FPS and Obj count
     public Text fps_Text;           //text to explain min FPS
-    string minFPSDisplay = "Min {0} FPS";
+    string minFPSDisplay = "Limit to {0} FPS";
     public int fpsInput                                     //implementation of encapsulation
     {
         get { return minFPS; }
@@ -112,6 +112,9 @@ public class GameManager : MonoBehaviour
                 {
                     sendDigit = 3;
                     m_scoreText.text = string.Format(scoreString_2, finalScore.ToString());
+                    LeaderboardScript lbScript = GetComponent<LeaderboardScript>();
+                    lbScript.enabled = true;
+                    lbScript.userScore = finalScore;
                 }
                 else
                 {

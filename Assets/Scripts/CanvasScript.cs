@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CanvasScript : MonoBehaviour               //this script manages canvas layers from start to finish
 {
@@ -33,16 +34,22 @@ public class CanvasScript : MonoBehaviour               //this script manages ca
                 arena.SetActive(true);*/
             }
             else
-            {                
-                Destroy(this);
+            {
+                //Destroy(this);
+                Debug.Log("LeftClick");
             }
         }
     }
 
-    public void ButtonClick()
+    public void ProceedClick()
     {
         hideSecondLayer = true;
         secondLayer.SetActive(false);
         arena.SetActive(true);
+    }
+
+    public void RepeatButton()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 0);
     }
 }

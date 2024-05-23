@@ -159,7 +159,6 @@ public class GameManager : MonoBehaviour
         if(result)
         {
             fpsInput = int.Parse(s);
-            //minFPS = fpsInput;
         }      
 
         fps_Text.text = string.Format(minFPSDisplay, minFPS.ToString());

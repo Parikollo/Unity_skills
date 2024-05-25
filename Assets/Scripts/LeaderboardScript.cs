@@ -32,7 +32,7 @@ public class LeaderboardScript : MonoBehaviour
         memorySize = SystemInfo.systemMemorySize / 1024;
         //Debug.Log(string.Format(leaderboadrString, SystemInfo.processorType, SystemInfo.graphicsDeviceName, memorySize.ToString(), userNameInput));
         //LeaderboardCreator.LoggingEnabled = false;
-        LeaderboardCreator.ResetPlayer();
+        //LeaderboardCreator.ResetPlayer();                 //use this line if you want to create unique record for each test
         GetLeaderboard();
     }
 

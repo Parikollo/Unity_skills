@@ -9,6 +9,9 @@ public class CanvasScript : MonoBehaviour               //this script manages ca
 
     public GameObject arena, firstLayer, secondLayer;
 
+    [SerializeField] private AudioSource canvasAudio;
+    [SerializeField] private AudioClip clip1, clip2;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +29,9 @@ public class CanvasScript : MonoBehaviour               //this script manages ca
             {
                 hideFirstLayer = true;
                 firstLayer.SetActive(false);
+
+                canvasAudio.clip = clip1;
+                canvasAudio.Play();
             }
             else if (!hideSecondLayer)
             {
@@ -46,6 +52,9 @@ public class CanvasScript : MonoBehaviour               //this script manages ca
         hideSecondLayer = true;
         secondLayer.SetActive(false);
         arena.SetActive(true);
+
+        canvasAudio.clip = clip2;
+        canvasAudio.Play();
     }
 
     public void RepeatButton()

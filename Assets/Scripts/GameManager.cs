@@ -11,6 +11,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] bool stopSpawning;                         //bool to stop spawn new objects
     [SerializeField] bool stopScoring;                         //bool to stop count points
 
+    [SerializeField] private AudioSource managerAudio;
+    [SerializeField] private AudioClip clip1, clip2, clip3, clip4;
+
     //variables for counting objects system
     public int objectsCount;
     string objCountString = "Obj Count: {0}/{1}";            //text template for text
@@ -93,6 +96,9 @@ public class GameManager : MonoBehaviour
                 CountObjects();
 
                 go_clickText.SetActive(false);
+
+                managerAudio.clip = clip1;
+                managerAudio.Play();
             }
         }
 
@@ -103,6 +109,13 @@ public class GameManager : MonoBehaviour
             {
                 TimeForAction(sendDigit);
                 Debug.Log("EVENT!!!");
+
+                if (!stopSpawning) 
+                {
+                    managerAudio.clip = clip2;
+                    managerAudio.Play();
+                }
+
             }
 
             if (stopSpawning && !stopScoring)
@@ -115,11 +128,18 @@ public class GameManager : MonoBehaviour
                     LeaderboardScript lbScript = GetComponent<LeaderboardScript>();
                     lbScript.enabled = true;
                     lbScript.userScore = finalScore;
+                    stopScoring = true;
+
+                    managerAudio.clip = clip3;
+                    managerAudio.Play();
                 }
                 else
                 {
                     int avgFPS = (int)fpsScript.avgFramrate;
                     GetScore(objectsCount, avgFPS);
+
+                    managerAudio.clip = clip4;
+                    managerAudio.Play();
                 }
             }
 
@@ -131,7 +151,7 @@ public class GameManager : MonoBehaviour
         if(timeSpent == 0f)
         {
             CountObjects();
-            int avgFPS = (int)fpsScript.avgFramrate;
+            float avgFPS = fpsScript.avgFramrate / 1.6f;
             if (objectsCount > 1 && !stopSpawning)
             {
                 if (avgFPS < minFPS || objectsCount > maxObjCount)

@@ -10,10 +10,10 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - static_background
   - Water
   - UI
-  - 
+  - animated_objects
   - 
   - 
   - 

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2989811419650222382}
   - component: {fileID: 3691702594392435711}
   - component: {fileID: 9047738141134287458}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: SpawnedObject
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 582143741945116948}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: -2504252078809207125, guid: c141982c0644b5d4d9732018e2636b9a, type: 3}
 --- !u!23 &4970105458576541516
 MeshRenderer:
   m_ObjectHideFlags: 0

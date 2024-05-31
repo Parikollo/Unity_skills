@@ -27,7 +27,7 @@ public class CubesScript : MonoBehaviour
         }
     }
 
-    public void SetColor()
+    public void SetColor()      // ABSTRACTION
     {
         Vector3 generatedVector = RandomVector();
         Color color = new Vector4(1f, Mathf.Abs(generatedVector.x), Mathf.Abs(generatedVector.y), Mathf.Abs(generatedVector.z));
@@ -65,6 +65,7 @@ public class CubesScript : MonoBehaviour
 
     }
 
+    // ABSTRACTION
     void DestroyThisObject()
     {
         GameManager.TimeForAction -= Action;

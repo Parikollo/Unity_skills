@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
     //variables to parse InputFields with FPS and Obj count
     public Text fps_Text;           //text to explain min FPS
     string minFPSDisplay = "Limit to {0} FPS";
+    // ENCAPSULATION
     public int fpsInput                                     //implementation of encapsulation
     {
         get { return minFPS; }
@@ -165,7 +166,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void CountObjects()
+    void CountObjects()     // ABSTRACTION
     {
         objectsCount = SceneManager.GetActiveScene().rootCount - 6;
         m_objectsCountText.text = string.Format(objCountString, objectsCount.ToString(), maxObjCount.ToString());
@@ -197,7 +198,7 @@ public class GameManager : MonoBehaviour
         //fps_Text.text = string.Format(minFPSDisplay, minFPS.ToString());
     }
 
-    void GetScore (int obj, int fps)
+    void GetScore (int obj, int fps)            // ABSTRACTION
     {
         finalScore += obj * fps;
         m_scoreText.text = string.Format(scoreString_1, finalScore.ToString());
